@@ -14,24 +14,22 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "nonprod-dl" {
 }
 
 # Storage blob
-# resource "azurerm_storage_container" "non-prod" {
-#   name                  = "blobsc"
-#   resource_group_name   = var.resource_group
-#   storage_account_name  = azurerm_storage_account.demo-non-stag-act.name
-#   container_access_type = "private"
-# }
+resource "azurerm_storage_container" "non-prod" {
+  name                  = "blobsc"
+  resource_group_name   = var.resource_group
+  storage_account_name  = azurerm_storage_account.demo-non-stag-act.name
+  container_access_type = "private"
+}
+
+resource "azurerm_synapse_workspace" "demo-synapse" {
+  name                = var.name
+  location            = var.resource_group_loc
+  resource_group_name = var.resource_group
+  storage_data_lake_gen2_filesystem_id  = azurerm_storage_account.demo-non-stag-act.id
 
 
-
-# resource "azurerm_synapse_workspace" "demo-synapse" {
-#   name                = var.name
-#   location            = var.resource_group_loc
-#   resource_group_name = var.resource_group
-#   storage_data_lake_gen2_filesystem_id  = azurerm_storage_account.demo-non-stag-act.id
-
-
-#   tags = {
-#     Env = "non-stag"
-#   }
-# }
+  tags = {
+    Env = "non-stag"
+  }
+}
  

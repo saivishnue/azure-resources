@@ -1,14 +1,6 @@
-1. Deploy 5 machines using the script
-2. Run the following comamnds in all the 5 nodes under root.
-sudo usermod -aG docker adminsai
-sudo usermod -aG root adminsai
-sudo systemctl daemon-reload
-sudo systemctl restart docker.service
-3. Perform rke up
 
 
-
-RG=K8SB12
+RG=azure
 echo "Creating Azure Resource Group"
 az group create --location eastus -n ${RG}
 

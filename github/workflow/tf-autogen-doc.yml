@@ -1,0 +1,24 @@
+name: Generate terraform docs
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  docs:
+    if: github.event.review.state == 'approved'
+    continue-on-error: true
+    runs-on: fargate.1.4
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Render terraform docs inside the README.md and push changes back to pushed branch
+        uses: terraform-docs/gh-actions@main
+        with:
+          working-dir: .
+          output-file: README.md
+          output-method: inject
+          git-push: "true"
+          git-commit-message: "terraform-docs: automated update action"
